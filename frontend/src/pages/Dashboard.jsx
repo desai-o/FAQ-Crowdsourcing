@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TrendingQuestions from "../components/TrendingQuestions";
 import StatsGrid from "../components/StatsGrid";
+import CommunityHeatmap from "../components/CommunityHeatmap";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import AskQuestionModal from "../components/AskQuestionModal";
@@ -28,6 +29,8 @@ function Dashboard() {
           </section>
 
           <StatsGrid />
+
+          <CommunityHeatmap />
 
           <div className="dashboard-grid">
             <div className="dashboard-main">
