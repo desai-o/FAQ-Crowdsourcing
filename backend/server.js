@@ -12,6 +12,7 @@ const { startSyncPipeline, runSyncPipeline } = require("./services/syncService")
 const faqRoutes = require("./routes/faqRoutes");
 const queryRoutes = require("./routes/queryRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const statsRoutes = require("./routes/statsRoutes");
 
 const app = express();
 
@@ -88,6 +89,7 @@ Return:
 app.use("/api/faqs", faqRoutes);
 app.use("/api/queries", queryRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/stats", statsRoutes);
 
 async function bootstrap() {
   await connectSQLite();

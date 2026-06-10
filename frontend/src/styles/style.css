@@ -27,7 +27,7 @@
 /* ── LIGHT THEME (default) ── */
 :root,
 [data-theme="light"] {
-  --bg-page:        #f0ede8;
+  --bg-page:        #f5f4f0;
   --bg-sidebar:     #1a1a1a;
   --bg-white:       #ffffff;
   --bg-cta:         #2b2b2b;
@@ -36,8 +36,8 @@
   --bg-table-head:  #f9fafb;
   --bg-table-hover: #f9fafb;
 
-  --text-primary:   #1a1a1a;
-  --text-secondary: #666666;
+  --text-primary:   #111111;
+  --text-secondary: #888888;
   --text-light:     #999999;
   --text-white:     #ffffff;
   --text-heading:   #111827;
@@ -105,17 +105,17 @@
 
 /* ── DARK THEME ── */
 [data-theme="dark"] {
-  --bg-page:        #0f1117;
-  --bg-sidebar:     #0a0b0f;
-  --bg-white:       #1a1d27;
-  --bg-cta:         #13161f;
-  --bg-input:       #1e2130;
-  --bg-hover:       #252836;
-  --bg-table-head:  #151820;
-  --bg-table-hover: #1f2235;
+  --bg-page:        #1a1a1a;
+  --bg-sidebar:     #0d0d0d;
+  --bg-white:       #242424;
+  --bg-cta:         #151515;
+  --bg-input:       #2a2a2a;
+  --bg-hover:       #2e2e2e;
+  --bg-table-head:  #1d1d1d;
+  --bg-table-hover: #222222;
 
-  --text-primary:   #e2e8f0;
-  --text-secondary: #94a3b8;
+  --text-primary:   #f0f0f0;
+  --text-secondary: #999999;
   --text-light:     #64748b;
   --text-white:     #f1f5f9;
   --text-heading:   #f1f5f9;
@@ -315,7 +315,7 @@ input, select, textarea {
 .search-box {
   display: flex;
   align-items: center;
-  background: var(--bg-white);
+  background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: 50px;
   padding: 0 18px;
@@ -349,49 +349,82 @@ input, select, textarea {
 }
 
 /* ── THEME TOGGLE BUTTON ── */
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--toggle-pill-bg);
-  border: none;
-  border-radius: 50px;
-  padding: 6px 10px 6px 8px;
-  cursor: pointer;
-}
-.theme-toggle:hover {
-  opacity: 0.85;
-}
-
-.theme-toggle-track {
-  width: 28px;
-  height: 16px;
-  background: var(--toggle-track);
-  border-radius: 50px;
+.theme-toggle-btn {
   position: relative;
-  flex-shrink: 0;
-  transition: background 0.25s;
-}
-
-.theme-toggle-thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 12px;
-  height: 12px;
-  background: var(--toggle-thumb);
-  border-radius: 50%;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-[data-theme="dark"] .theme-toggle-thumb {
-  transform: translateX(12px);
-}
-
-.theme-toggle-icon {
-  color: var(--text-secondary);
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  overflow: hidden;
+}
+
+.theme-toggle-btn.light {
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+.theme-toggle-btn.dark {
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.theme-toggle-btn:hover {
+  opacity: 0.9;
+}
+
+.theme-icon-container {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon-container svg {
+  position: absolute;
+  color: var(--text-secondary);
+}
+
+@keyframes sunIn {
+  from { opacity: 0; transform: scale(0.6) rotate(-45deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes sunOut {
+  from { opacity: 1; transform: scale(1) rotate(0); }
+  to { opacity: 0; transform: scale(0.6) rotate(45deg); }
+}
+
+@keyframes moonIn {
+  from { opacity: 0; transform: scale(0.6) rotate(45deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes moonOut {
+  from { opacity: 1; transform: scale(1) rotate(0); }
+  to { opacity: 0; transform: scale(0.6) rotate(-45deg); }
+}
+
+.theme-toggle-btn.light .sun-icon {
+  animation: sunIn 300ms ease-out forwards;
+}
+
+.theme-toggle-btn.light .moon-icon {
+  animation: moonOut 300ms ease-out forwards;
+}
+
+.theme-toggle-btn.dark .sun-icon {
+  animation: sunOut 300ms ease-out forwards;
+}
+
+.theme-toggle-btn.dark .moon-icon {
+  animation: moonIn 300ms ease-out forwards;
 }
 
 /* ── END THEME TOGGLE ── */
@@ -990,7 +1023,7 @@ input, select, textarea {
   flex: 1;
   display: flex;
   align-items: center;
-  background: var(--bg-white);
+  background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0 16px;
