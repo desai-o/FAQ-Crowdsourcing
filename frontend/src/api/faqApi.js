@@ -1,9 +1,14 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
+function getToken() {
+  return localStorage.getItem("crowdfaq_token");
+}
+
 async function request(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     headers: {
       "Content-Type": "application/json",
+      ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {}),
       ...(options.headers || {})
     },
     ...options
@@ -90,4 +95,26 @@ export async function fetchActivityStats(range = "week") {
 
 export async function fetchHeatmapStats(range = "week") {
   return request(`/stats/heatmap?range=${range}`);
+}
+
+export async function registerUser(payload) {
+  return request("/auth/register", {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+}
+
+export async function loginUser(payload) {
+  return request("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+}
+
+export async function fetchLeaderboard() {
+  return request("/users/leaderboard");
+}
+
+export async function fetchMe() {
+  return request("/users/me");
 }

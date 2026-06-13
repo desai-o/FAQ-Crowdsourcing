@@ -43,7 +43,9 @@ router.post("/", async (req, res) => {
         category: inferredCategory,
         tags: normalizedTags,
         status: answer ? "resolved" : "pending",
-        source: "frontend"
+        source: "frontend",
+        userId: req.user?.id || "anonymous",
+        authorName: req.user?.name || "Anonymous"
       });
 
       await trackEvent({
@@ -77,9 +79,11 @@ router.post("/", async (req, res) => {
         tags,
         status,
         source,
+        user_id,
+        author_name,
         synced_to_mongo
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, 0)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
       `,
       question.trim(),
       answer ? answer.trim() : "",
@@ -87,7 +91,9 @@ router.post("/", async (req, res) => {
       inferredCategory,
       normalizedTags.join(","),
       answer ? "resolved" : "pending",
-      "frontend"
+      "frontend",
+      req.user?.id || "anonymous",
+      req.user?.name || "Anonymous"
     );
 
     await trackEvent({

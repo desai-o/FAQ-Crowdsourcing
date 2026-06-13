@@ -21,6 +21,15 @@ const userQuerySchema = new mongoose.Schema(
       type: String,
       default: "frontend"
     },
+    userId: {
+      type: String,
+      default: "anonymous",
+      index: true
+    },
+    authorName: {
+      type: String,
+      default: "Anonymous"
+    },
     category: {
       type: String,
       default: "General",

@@ -15,11 +15,15 @@ const aiRoutes = require("./routes/aiRoutes");
 const answerRoutes = require("./routes/answerRoutes");
 const voteRoutes = require("./routes/voteRoutes");
 const bookmarkRoutes = require("./routes/bookmarkRoutes");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const { optionalAuth } = require("./middleware/auth");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(optionalAuth);
 
 app.get("/", (req, res) => {
   res.json({
@@ -48,6 +52,8 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/faqs", faqRoutes);
 app.use("/api/queries", queryRoutes);
 app.use("/api/search", searchRoutes);

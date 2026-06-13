@@ -17,6 +17,8 @@ async function connectSQLite() {
       answer TEXT DEFAULT '',
       status TEXT DEFAULT 'pending',
       source TEXT DEFAULT 'frontend',
+      user_id TEXT DEFAULT 'anonymous',
+      author_name TEXT DEFAULT 'Anonymous',
       category TEXT DEFAULT 'General',
       tags TEXT DEFAULT '',
       description TEXT DEFAULT '',
