@@ -1,5 +1,9 @@
 require("dotenv").config();
 
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+console.log("Custom DNS applied");
+
 const express = require("express");
 const cors = require("cors");
 
@@ -16,7 +20,10 @@ const notificationRoutes = require("./routes/notificationRoutes");
 
 const statsRoutes = require("./routes/statsRoutes");
 const aiRoutes = require("./routes/aiRoutes");
- main
+const authRoutes = require("./routes/authRoutes");
+const answerRoutes = require("./routes/answerRoutes");
+const voteRoutes = require("./routes/voteRoutes");
+const bookmarkRoutes = require("./routes/bookmarkRoutes");
 
 const app = express();
 
@@ -53,11 +60,11 @@ app.get("/health", (req, res) => {
 app.use("/api/faqs", faqRoutes);
 app.use("/api/queries", queryRoutes);
 app.use("/api/search", searchRoutes);
-feature/follow-button
-app.use("/api/follows", followRoutes);
-app.use("/api/notifications", notificationRoutes);
-
+app.use("/api/answers", answerRoutes);
+app.use("/api/votes", voteRoutes);
+app.use("/api/bookmarks", bookmarkRoutes);
 app.use("/api/stats", statsRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api", aiRoutes);
  main
 

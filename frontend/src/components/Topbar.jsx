@@ -6,6 +6,14 @@ feature/follow-button
 import { useState, useEffect, useRef } from "react";
 
 import ProfileDropdown from "./ProfileDropdown";
+import { useAuth } from "../context/AuthContext";
+
+const getInitials = (name) => {
+  if (!name) return "?";
+  const parts = name.split(" ").filter(Boolean);
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0][0] + (parts[1]?.[0] || "")).toUpperCase();
+};
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -63,7 +71,8 @@ function ThemeToggle() {
 main
 
 function Topbar({ openModal }) {
-  const { searchQuery, setSearchQuery, contributors } = useFAQ();
+  const { searchQuery, setSearchQuery } = useFAQ();
+  const { user } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   
@@ -111,11 +120,6 @@ function Topbar({ openModal }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  // Retrieve current user dynamically from FAQ Context (mapped to mock user "Alex Chen")
-  const currentUser = contributors?.find((c) => c.name === "Alex Chen") || {
-    avatar: "A",
-  };
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -181,16 +185,22 @@ function Topbar({ openModal }) {
           + Ask Question
         </button>
 
-        <div style={{ position: "relative" }}>
-          <div 
-            className="avatar" 
-            style={{ cursor: "pointer" }} 
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            {currentUser.avatar}
+        {user ? (
+          <div style={{ position: "relative" }}>
+            <div 
+              className="avatar" 
+              style={{ cursor: "pointer" }} 
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            >
+              {getInitials(user.name)}
+            </div>
+            <ProfileDropdown isOpen={dropdownOpen} onClose={() => setDropdownOpen(false)} />
           </div>
-          <ProfileDropdown isOpen={dropdownOpen} onClose={() => setDropdownOpen(false)} />
-        </div>
+        ) : (
+          <button className="signin-btn" onClick={() => navigate("/login")}>
+            Sign In
+          </button>
+        )}
       </div>
     </header>
   );
